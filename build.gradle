@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+version = project.mod_version
+group = project.mod_group_id
+base { archivesName = project.mod_id }
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+neoForge {
+    version = project.neo_version
+    runs {
+        client { client(); gameDirectory = project.file('runs/client') }
+        server { server(); gameDirectory = project.file('runs/server') }
+        data { data(); gameDirectory = project.file('runs/data') }
+    }
+    mods { worldfall { sourceSet sourceSets.main } }
+}
+repositories { mavenCentral() }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.jar { archiveClassifier = '' }
